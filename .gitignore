@@ -29,7 +29,9 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
-
+serverconfig.txt
+serverconfig.txt/
+/serverconfig.txt/ 
 /Static/
 /Static
 Static/
