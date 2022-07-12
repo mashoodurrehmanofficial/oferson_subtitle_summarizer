@@ -70,12 +70,12 @@ def dashboard(request):
 # @login_required(login_url="/login/")
 def getResults(request):  
     context = {}  
-    video_id = request.GET['video_id']
+    video_id = str(request.GET['video_id'])
     scale = float(str(request.GET['scale']))
     print(video_id) 
     print("-> Getting Subtitle")
     
-    subtitle = YouTubeTranscriptApi.get_transcript("Cgxsv1riJhI") 
+    subtitle = YouTubeTranscriptApi.get_transcript(video_id) 
     subtitle = " ".join( [x['text'] for x in subtitle]).strip()
 
     headers = {
