@@ -1,0 +1,72 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+ 
+    
+    <center>
+    
+        
+        <div class="mb">
+            <label class="form-label" for="video_id">Enter Video ID</label>
+            <input type="text" class="form-control" id="video_id" placeholder="Enter VIDEO id" autocomplete="off">
+        </div>
+        <div class="mb">
+            <label class="form-label" for="scale">Enter Scale</label>
+            <input type="text" class="form-control" id="scale" placeholder="Enter Scale"  value="0.05">
+        </div>
+     
+        <br>
+        <button id="submit_btn">
+            Get Results
+        </button>
+
+        <div id="punctuated_subtitle" style="text-align: justify;"></div>
+
+        <br>
+        <hr>
+        <br>
+
+        <div id="summarized_subtitle" style="text-align: justify;"></div>
+
+
+    </center>
+     
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#submit_btn").click(function(e){
+        var video_id = $("#video_id").val()
+        var scale = $("#scale").val()
+        if (!video_id){
+            alert("Please enter a video ID ")
+            return
+        }  
+        if (!scale){
+            alert("Please enter a scale ")
+            return
+        }  
+        $("#punctuated_subtitle").html("Loading Punctuation  ...")
+        $("#summarized_subtitle").html("Loading Summary...")
+
+        $.ajax({
+            url: "/getResults/",
+            method: "GET",
+            data: {"video_id":video_id, "scale": parseFloat(scale)},
+            success: function(res){
+                $("#punctuated_subtitle").html(res.punctuated_subtitle)
+                $("#summarized_subtitle").html(res.summarized_subtitle)
+            }
+        })
+
+
+    })
+</script>
+
+</body>
+</html>
