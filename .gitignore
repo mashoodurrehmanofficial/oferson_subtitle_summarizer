@@ -148,6 +148,7 @@ s2v_reddit_2015_md.tar.gz
 .dmypy.json
 dmypy.json
 s2v_reddit_2015_md.tar.gz
+*._s2v_old
 
 # Pyre type checker
 .pyre/
