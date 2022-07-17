@@ -16,6 +16,7 @@ from heapq import nlargest
 print("-> Generating Subtitle")
 
 srt = YouTubeTranscriptApi.get_transcript("Cgxsv1riJhI") 
+srt = YouTubeTranscriptApi.get_transcript("-atblwgc63E") 
 subtitle = " ".join( [x['text'] for x in srt]).strip()
 
 
