@@ -120,6 +120,7 @@ celerybeat.pid
 # Environments
 .build
 .env
+.myenv
 .venv
 env/
 venv/
@@ -137,10 +138,16 @@ venv.bak/
 # mkdocs documentation
 /site
 
+/s2v_old/
+s2v_reddit_2015_md.tar.gz
+/myenv/
+
+
 # mypy
 .mypy_cache/
 .dmypy.json
 dmypy.json
+s2v_reddit_2015_md.tar.gz
 
 # Pyre type checker
 .pyre/

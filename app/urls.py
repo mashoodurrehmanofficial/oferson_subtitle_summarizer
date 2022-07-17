@@ -9,6 +9,7 @@ urlpatterns = [
      
     path('', dashboard, name='dashboard'), 
     path('getResults/', getResults, name='getResults'), 
+    path('genrateQuestionView/', genrateQuestionView, name='genrateQuestionView'), 
     
     
         

@@ -1,0 +1,81 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <span>
+        <a href="/">Home </a>  
+        <a href="/genrateQuestionView"> Question</a>
+    </span>
+    
+    <center>
+    
+        
+        <div class="mb">
+            <label class="form-label" for="payload">Enter Payload</label>
+            <textarea type="text" class="form-control" id="payload" placeholder="Enter  Payload" autocomplete="off" style="width: 100%;height:100px"></textarea>
+        </div>
+        <div class="mb">
+            <label class="form-label" for="input_question">Enter question</label>
+            <input type="text" class="form-control" id="input_question" placeholder="Enter  Question" autocomplete="off" ></input>
+        </div>
+        <div class="mb">
+            <label class="form-label" for="scale">Select Question Type</label>
+            <select name="question_type" id="question_type">
+                <option value="">True/False</option>
+                <option value="">MCQs</option>
+                <option value="">FAQ</option> 
+                <option value="">Ask Question</option> 
+            </select>
+        </div>
+     
+        <br>
+        <button id="submit_btn">
+            Get Results
+        </button>
+
+        
+        
+    </center>
+    
+    
+     <div id="results">
+
+     </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#submit_btn").click(function(e){
+        var input_question = $("#input_question").val()
+        var payload = $("#payload").val()
+        var question_type = $("select#question_type  option:selected").text()
+        if (!payload){
+            alert("Please enter a payload ")
+            return
+        }  
+        if (!question_type){
+            alert("Please select question type ")
+            return
+        }  
+        $("#results").html("Loading Data  ...") 
+
+        $.ajax({
+            url: "/genrateQuestionView/",
+            method: "POST",
+            data: {"payload":payload, "question_type": question_type,"input_question":input_question},
+            success: function(res){  
+                console.log(res.results)
+                $("#results").text(JSON.stringify(res.results))
+            }
+        })
+
+
+    })
+</script>
+
+</body>
+</html>

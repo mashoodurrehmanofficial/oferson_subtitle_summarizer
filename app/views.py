@@ -9,6 +9,10 @@ import spacy
 from spacy.lang.en.stop_words import STOP_WORDS
 from string import punctuation
 from heapq import nlargest
+import nltk
+nltk.download('stopwords')
+from Questgen import main
+
 
 # Create your views here.
 
@@ -99,9 +103,52 @@ def getResults(request):
     try:
         context['summarized_subtitle'] = summarize(punctuated_subtitle, scale)
     except:
-        pass
-
-
-
-
+        pass 
     return JsonResponse(context)
+
+
+@csrf_exempt
+def genrateQuestionView(request):     
+    if request.method == 'POST':
+        context = {}  
+        payload_text = str(request.POST['payload']) 
+        input_question = str(request.POST['input_question']) 
+        question_type = str(request.POST['question_type']) 
+       
+        print("question_type = ", question_type)
+        payload = {"input_text": str(payload_text)}
+        
+        print("-> Generating Output")
+        
+        if question_type=='True/False':
+            qe= main.BoolQGen()
+            output = qe.predict_boolq(payload)
+            print (output)
+            
+            
+        elif question_type=='MCQs':
+            qg = main.QGen()
+            output = qg.predict_mcq(payload)
+            print (output)
+            
+            
+            
+        elif question_type=='FAQ':
+            qg = main.QGen()    
+            output = qg.predict_shortq(payload)
+            print (output)
+            
+            
+        elif question_type=='Ask Question':
+            payload = {"input_text": str(payload_text),"input_question":input_question}
+            answer = main.AnswerPredictor()
+            output = answer.predict_answer(payload)
+            print (output)
+ 
+        
+        context['results'] = output
+   
+        return JsonResponse(context)
+    
+    
+    return render(request, 'app/questions.html' ) 
