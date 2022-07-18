@@ -76,7 +76,7 @@
 
                 res = res.results ;
                 if (question_type=='True/False'){
-                    var count =  res['Count'];
+                    var count =  res['Boolean Questions'].length;
                     var questions =  res['Boolean Questions']  
                     display_box.append(`<h4>Total questions: ${count}</h4><br>`)
                     for(var i=0;i<questions.length;i++){
