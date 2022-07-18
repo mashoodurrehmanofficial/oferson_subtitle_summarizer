@@ -63,13 +63,69 @@
         }  
         $("#results").html("Loading Data  ...") 
 
+        var display_box = $("#results")
+
         $.ajax({
             url: "/genrateQuestionView/",
             method: "POST",
             data: {"payload":payload, "question_type": question_type,"input_question":input_question},
             success: function(res){  
                 console.log(res.results)
-                $("#results").text(JSON.stringify(res.results))
+
+                res = res.results ;
+                if (question_type=='True/False'){
+                    var count =  res['Count'];
+                    var questions =  res['Boolean Questions']  
+                    display_box.append(`<h4>Total questions: ${count}</h4><br>`)
+                    for(var i=0;i<questions.length;i++){
+                        display_box.append(`<h3>question: ${questions[i]}</h3>
+                        <br><hr><br>
+                        
+                        `)
+                        
+                    }
+                    
+                }
+                
+                else if (question_type=='MCQs'){
+                    var count =  res['questions'].length;
+                    var questions =  res['questions']  
+                    display_box.append(`<h4>Total questions: ${count}</h4><br>`)
+                    for(var i=0;i<questions.length;i++){
+                        display_box.append(` 
+                            <h3>Question ${questions[i]["id"]} : ${questions[i]['question_statement']}</h3>
+                            <h3>Optoins: ${questions[i]['options']}</h3>
+                            <h3>Extra Optoins: ${questions[i]['extra_options']}</h3>
+                            <h3>Answwer: ${questions[i]['answer']}</h3>
+                            <h3>Detail Answwer: ${questions[i]['context']}</h3> 
+
+                            <br><hr><br>
+                        `)
+
+                    }
+                    
+                }
+                
+                else if (question_type=='FAQ'){
+                    var count =  res['questions'].length;
+                    var questions =  res['questions']  
+                    display_box.append(`<h4>Total questions: ${count}</h4><br>`)
+                    for(var i=0;i<questions.length;i++){
+                        display_box.append(` 
+                            <h3>Question ${questions[i]["id"]} : ${questions[i]['Question']}</h3> 
+                            <h3>Answwer: ${questions[i]['Answer']}</h3>
+                            <h3>Detail Answwer: ${questions[i]['context']}</h3> 
+                            <br><hr><br>
+
+                        `)
+                    }
+
+                }
+                else if (question_type=='Ask Question'){
+
+                    $("#results").text(JSON.stringify(res))
+                }
+
             }
         })
 
